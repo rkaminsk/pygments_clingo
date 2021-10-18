@@ -6,6 +6,10 @@ files.
 Currently, not the whole language is covered but only my current needs. Please
 open an issue to request features.
 
+# Example
+
+<img src="example.svg" width="500" alt="Towers of Hanoi Example">
+
 ## Installing 
 
 The package can either be installed using setuptools:
