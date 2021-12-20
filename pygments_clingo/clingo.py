@@ -39,6 +39,7 @@ class ClingoLexer(RegexLexer):
             (r'[\[\](){}|.,;:]', Punctuation),
             (r'(<|>|=<|>=|==|=|/|\\|\*|\+|-|!=|\.\.|\*\*)', Operator),
             (r'(#count|#sum|#show|#const|not)\b', Keyword),
+            (r'(#inf|#sup)\b', Keyword.Constant),
             (r'[_]*[A-Z][a-zA-Z_]*', Name.Variable),
             (r'_', Name.Variable),
             (r'[_]*[a-z][a-zA-Z_]*', Text),
