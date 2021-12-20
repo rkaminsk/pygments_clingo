@@ -36,10 +36,14 @@ class ClingoLexer(RegexLexer):
             (r'\d+', Number.Integer),
             (r'"(\\n|\\"|\\\\|[^\\])*"', String.Double),
             (r':-', Punctuation),
-            (r'[\[\](){}|.,;:]', Punctuation),
-            (r'(<|>|=<|>=|==|=|/|\\|\*|\+|-|!=|\.\.|\*\*)', Operator),
-            (r'(#count|#sum|#show|#const|not)\b', Keyword),
-            (r'(#inf|#sup)\b', Keyword.Constant),
+            (r'[\[\](){}]', Punctuation),
+            (r'((?<!:):-|(?<!:):~|\.(?!\.)|,(?!;)|;(?!;)|:(?!:))', Punctuation),
+            (r'\&[_]*[a-z][a-zA-Z_]*', Keyword),
+            (r'[/<=>+\-*\\?&@|:;~k.!]+', Operator),
+            (r'(#count|#sum|#show|#const|#edge|#minimize|#maximize|'
+              '#defined|#heuristic|#project|#script|#program|'
+              '#external|#theory|not)\b', Keyword),
+            (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
             (r'[_]*[A-Z][a-zA-Z_]*', Name.Variable),
             (r'_', Name.Variable),
             (r'[_]*[a-z][a-zA-Z_]*', Text),
