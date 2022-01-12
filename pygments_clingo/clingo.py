@@ -40,7 +40,7 @@ class ClingoLexer(RegexLexer):
             (r'((?<!:):-|(?<!:):~|\.(?!\.)|,(?!;)|;(?!;)|:(?!:))', Punctuation),
             (r'\&[_]*[a-z][a-zA-Z_]*', Keyword),
             (r'[/<=>+\-*\\?&@|:;~k.!]+', Operator),
-            (r'(#count|#sum|#show|#const|#edge|#minimize|#maximize|'
+            (r'(#count|#sum|#min|#max|#show|#const|#edge|#minimize|#maximize|'
              r'#defined|#heuristic|#project|#script|#program|'
              r'#external|#theory|not)\b', Keyword),
             (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
