@@ -41,8 +41,8 @@ class ClingoLexer(RegexLexer):
             (r'\&[_]*[a-z][a-zA-Z_]*', Keyword),
             (r'[/<=>+\-*\\?&@|:;~k.!]+', Operator),
             (r'(#count|#sum|#show|#const|#edge|#minimize|#maximize|'
-              '#defined|#heuristic|#project|#script|#program|'
-              '#external|#theory|not)\b', Keyword),
+             r'#defined|#heuristic|#project|#script|#program|'
+             r'#external|#theory|not)\b', Keyword),
             (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
             (r'[_]*[A-Z][a-zA-Z_]*', Name.Variable),
             (r'_', Name.Variable),
