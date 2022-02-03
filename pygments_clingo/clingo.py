@@ -2,10 +2,13 @@
     pygments_clingo.clingo
     ~~~~~~~~~~~~~~~~~~~~~~
 
-    Lexers for Prolog and Prolog-like languages.
+    Lexers for Logic Programs as supported by clingo.
 
-    :copyright: Copyright 2006-2021 by the Pygments team, see AUTHORS.
-    :license: BSD, see LICENSE for details.
+    The lexer should cover most of the ASPCore language and thus also be usable
+    with systems like dlv.
+
+    :copyright: Copyright 2021-2022 by Roland Kaminski
+    :license: MIT, see LICENSE for details.
 """
 
 import re
