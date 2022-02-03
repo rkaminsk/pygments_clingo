@@ -10,11 +10,26 @@
 
 import re
 
-from pygments.lexer import RegexLexer
+from pygments.lexer import RegexLexer, bygroups, using
+from pygments.lexers import PythonLexer, LuaLexer
 from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
     Number, Punctuation
 
 __all__ = ['ClingoLexer']
+
+
+def _script_lexer(name, lexer):
+    return (rf'(?s)(\s*)(\()({name})(\))(\s*)(.*)(#end)(\s*)(\.)',
+            bygroups(Text, # space
+                     Punctuation, # (
+                     Text, # python
+                     Punctuation, # )
+                     Text, # space
+                     using(lexer),
+                     Keyword, # end
+                     Text, # space
+                     Punctuation), # .)
+            '#pop')
 
 
 class ClingoLexer(RegexLexer):
@@ -41,13 +56,18 @@ class ClingoLexer(RegexLexer):
             (r'\&[_]*[a-z][a-zA-Z_]*', Keyword),
             (r'[/<=>+\-*\\?&@|:;~k.!]+', Operator),
             (r'(#count|#sum|#min|#max|#show|#const|#edge|#minimize|#maximize|'
-             r'#defined|#heuristic|#project|#script|#program|'
+             r'#defined|#heuristic|#project|#program|'
              r'#external|#theory|not)\b', Keyword),
+            (r'#script', Keyword, 'script'),
             (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
             (r'[_]*[A-Z][a-zA-Z_]*', Name.Variable),
             (r'_', Name.Variable),
             (r'[_]*[a-z][a-zA-Z_]*', Text),
             (r'\s', Text),
+        ],
+        'script': [
+           _script_lexer('python', PythonLexer),
+           _script_lexer('lua', LuaLexer),
         ],
         'nested-comment': [
             (r'\*%', Comment.Multiline, '#pop'),
