@@ -60,7 +60,7 @@ class ClingoLexer(RegexLexer):
             (r'[/<=>+\-*\\?&@|:;~k.!]+', Operator),
             (r'(#count|#sum|#min|#max|#show|#const|#edge|#minimize|#maximize|'
              r'#defined|#heuristic|#project|#program|'
-             r'#external|#theory|not)\b', Keyword),
+             r'#external|#theory|#end|not)\b', Keyword),
             (r'#script', Keyword, 'script'),
             (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
             (r'[_]*[A-Z][a-zA-Z_]*', Name.Variable),
@@ -71,6 +71,7 @@ class ClingoLexer(RegexLexer):
         'script': [
            _script_lexer('python', PythonLexer),
            _script_lexer('lua', LuaLexer),
+           ('', Text, '#pop'), # fallback to normal parsing
         ],
         'nested-comment': [
             (r'\*%', Comment.Multiline, '#pop'),

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup (
     name='pygments_clingo',
-    version='0.1.4',
+    version='0.1.5',
     license='MIT',
     description='Syntax highlighting for clingo',
     author='Roland Kaminski',
