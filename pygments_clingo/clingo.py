@@ -81,5 +81,26 @@ class ClingoLexer(RegexLexer):
         ],
     }
 
+    def get_tokens_unprocessed(self, text, stack=('root',)):
+        '''
+        This function adds special treatment for line label comments in Python
+        scripts for usage with the minted package.
+
+        In practice, it is very unlikely that there are comments starting with
+        '#%\llabel{', so this code should not interfere with other use cases.
+        '''
+        for index, token, value in RegexLexer.get_tokens_unprocessed(self, text, stack):
+            # Minted runs pygments two times. So we do the following:
+            # - in the first pass we prepend a # to all line label comments, and
+            # - in the second pass remove both #s.
+            # We can only remove the leading #s in the second run because at
+            # this point they still have to be tokenized as comments.
+            if token is Comment.Single and value.startswith(r"#%\llabel{") and value.endswith("#"):
+                yield index, token, f'#{value}'
+            elif token is Comment.Single and value.startswith(r"##%\llabel{") and value.endswith("#"):
+                yield index, token, value[2:]
+            else:
+                yield index, token, value
+
     def analyse_text(text):
         return ':-' in text
