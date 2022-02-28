@@ -63,9 +63,9 @@ class ClingoLexer(RegexLexer):
              r'#external|#theory|#end|not)\b', Keyword),
             (r'#script', Keyword, 'script'),
             (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
-            (r'[_]*[A-Z][a-zA-Z_]*', Name.Variable),
+            (r"[_']*[A-Z][a-zA-Z'_]*", Name.Variable),
             (r'_', Name.Variable),
-            (r'[_]*[a-z][a-zA-Z_]*', Text),
+            (r"[_']*[a-z][a-zA-Z'_]*", Text),
             (r'\s', Text),
         ],
         'script': [
