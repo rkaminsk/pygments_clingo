@@ -52,7 +52,7 @@ class ClingoLexer(RegexLexer):
             (r'%.*', Comment.Single),
             (r'0x[0-9a-fA-F]+', Number.Hex),
             (r'\d+', Number.Integer),
-            (r'"(\\n|\\"|\\\\|[^\\])*"', String.Double),
+            (r'"(\\n|\\"|\\\\|[^\\"])*"', String.Double),
             (r':-', Punctuation),
             (r'[\[\](){}]', Punctuation),
             (r'((?<!:):-|(?<!:):~|\.(?!\.)|,(?!;)|;(?!;)|:(?!:))', Punctuation),
@@ -62,16 +62,23 @@ class ClingoLexer(RegexLexer):
              r'#defined|#heuristic|#project|#program|'
              r'#external|#theory|#end|not)\b', Keyword),
             (r'#script', Keyword, 'script'),
+            (r'#include\b', Keyword, 'include'),
             (r'(#inf|#sup|#true|#false)\b', Keyword.Constant),
-            (r"[_']*[A-Z][a-zA-Z'_]*", Name.Variable),
+            (r"[_']*[A-Z][0-9a-zA-Z'_]*", Name.Variable),
             (r'_', Name.Variable),
-            (r"[_']*[a-z][a-zA-Z'_]*", Text),
+            (r"[_']*[a-z][0-9a-zA-Z'_]*", Text),
             (r'\s', Text),
         ],
+        'include': [
+            (r'<(\\>|\\"|\\\\|[^\\>])*>', String.Double, "#pop"),
+            (r'"(\\n|\\"|\\\\|[^\\"])*"', String.Double, "#pop"),
+            (r'\s', Text),
+            ('', Text, '#pop'), # fallback to normal parsing
+        ],
         'script': [
-           _script_lexer('python', PythonLexer),
-           _script_lexer('lua', LuaLexer),
-           ('', Text, '#pop'), # fallback to normal parsing
+            _script_lexer('python', PythonLexer),
+            _script_lexer('lua', LuaLexer),
+            ('', Text, '#pop'), # fallback to normal parsing
         ],
         'nested-comment': [
             (r'\*%', Comment.Multiline, '#pop'),
